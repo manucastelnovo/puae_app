@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/src/change_notifier_provider.dart';
+import 'package:puae_app/core/widgets/logo.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
-import 'widgets/logo.dart';
+import 'widgets/login_form.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -44,84 +45,12 @@ class LoginView extends HookConsumerWidget {
                       child: Container(
                         width: viewportWidth * 0.9,
                         color: const Color.fromARGB(255, 223, 220, 220),
-                        child: Form(
-                          key: _keyForm,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                validator: userProvider.validatorUser,
-                                controller: user,
-                                decoration: const InputDecoration(
-                                    labelText: 'Username',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 13, 106, 8))),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color.fromARGB(255, 89, 11, 2),
-                                      ),
-                                    ),
-                                    prefixIcon: Icon(Icons.person_rounded,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                    hintText: 'Username',
-                                    hintStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 223, 220, 220))),
-                              ),
-                              const SizedBox(height: 10),
-                              TextFormField(
-                                validator: userProvider.validatorPass,
-                                controller: password,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                    labelText: 'Password',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color.fromARGB(255, 13, 106, 8),
-                                      ),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color.fromARGB(255, 89, 11, 2),
-                                      ),
-                                    ),
-                                    prefixIcon: Icon(Icons.password_rounded,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                    hintText: 'Password',
-                                    hintStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 223, 220, 220))),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                width: viewportWidth * 0.9,
-                                child: ElevatedButton(
-                                  onPressed: (() {
-                                    if (_keyForm.currentState!.validate()) {
-                                      print('aprete join');
-                                    }
-                                  }),
-                                  child: const Text(
-                                    'Join',
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                  ),
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(255, 63, 18, 1),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        child: LoginForm(
+                            keyForm: _keyForm,
+                            userProvider: userProvider,
+                            user: user,
+                            password: password,
+                            viewportWidth: viewportWidth),
                       ),
                     ),
                   ],
