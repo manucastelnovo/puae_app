@@ -16,7 +16,7 @@ class UserViewController extends ChangeNotifier {
 
   User? get currentUser => _currentUser;
 
-  String? valitatorPass(value) {
+  String? validatorPass(value) {
     if (value!.isEmpty) {
       return 'El campo esta vacio';
     } else if (value == currentUser!.password) {
@@ -27,7 +27,7 @@ class UserViewController extends ChangeNotifier {
     return 'contrasenha incorrecta';
   }
 
-  String? valitatorUser(value) {
+  String? validatorUser(value) {
     if (value!.isEmpty) {
       return 'El campo esta vacio';
     } else if (value == currentUser!.name) {
