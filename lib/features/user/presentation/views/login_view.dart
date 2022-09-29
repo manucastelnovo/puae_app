@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/src/change_notifier_provider.dart';
+
 import 'package:puae_app/core/widgets/logo.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:puae_app/features/user/presentation/views/register_view.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -25,7 +26,6 @@ class LoginView extends HookConsumerWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      // color: Color.fromARGB(255, 89, 11, 2),
       color: const Color.fromARGB(255, 223, 220, 220),
       child: Stack(
         children: <Widget>[
@@ -123,10 +123,28 @@ class LoginView extends HookConsumerWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                'Sign in',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 223, 220, 220),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          const RegisterView(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Sign in',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      decoration: TextDecoration.underline),
+                                ),
                               )
                             ],
                           ),

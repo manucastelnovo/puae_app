@@ -8,7 +8,6 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -21,12 +20,12 @@ class Logo extends StatelessWidget {
               ),
             ),
           ),
-          const Text(
+          Text(
             "Pua'e App",
             style: TextStyle(
               fontFamily: 'Lato',
-              fontSize: 58,
-              color: Color.fromRGBO(255, 63, 18, 1),
+              fontSize: height! * 0.2,
+              color: const Color.fromRGBO(255, 63, 18, 1),
             ), // 4, 178, 217, 1
           ),
         ],

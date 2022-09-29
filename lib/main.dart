@@ -7,11 +7,7 @@ import 'core/dependency_injection/locator.dart';
 void main() {
   setupLocator();
   runApp(
-    const
-    // Para que los widgets puedan leer los providers, necesitamos envolver
-    // toda la aplicación en un `ProviderScope`.
-    // Aquí es donde se almacenará el estado de nuestros providers.
-    ProviderScope(
+    const ProviderScope(
       child: MyApp(),
     ),
   );
@@ -28,7 +24,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.red),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.red),
       home: const Scaffold(
         body: LoginView(),
       ),

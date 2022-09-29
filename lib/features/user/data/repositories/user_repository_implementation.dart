@@ -6,6 +6,7 @@ final userData = {
   'name': 'manu420',
   'correo': 'marnutskate@gmail.com',
   'password': '12345678',
+  'userType': 'admin',
 };
 
 class UserRepositoryImplementation implements UserRepository {
