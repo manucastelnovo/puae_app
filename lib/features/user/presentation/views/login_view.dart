@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/src/change_notifier_provider.dart';
+
 import 'package:puae_app/core/widgets/logo.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:puae_app/features/user/presentation/views/register_view.dart';
+import 'package:puae_app/utils/dio.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -19,13 +21,13 @@ class LoginView extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(userViewProvider).getUser();
+      print('putoooooooooooooooooo${userProvider.currentUser}');
       return;
     }, []);
 
     return Container(
       width: double.infinity,
       height: double.infinity,
-      // color: Color.fromARGB(255, 89, 11, 2),
       color: const Color.fromARGB(255, 223, 220, 220),
       child: Stack(
         children: <Widget>[
@@ -45,7 +47,6 @@ class LoginView extends HookConsumerWidget {
                       child: Container(
                         width: viewportWidth * 0.9,
                         color: const Color.fromARGB(255, 223, 220, 220),
-
                         child: Form(
                           key: _keyForm,
                           child: Column(
@@ -107,6 +108,9 @@ class LoginView extends HookConsumerWidget {
                                   onPressed: (() {
                                     if (_keyForm.currentState!.validate()) {
                                       print('aprete join');
+                                      print(
+                                          userProvider.currentUser.toString());
+                                      print('sdfsdfs');
                                     }
                                   }),
                                   child: const Text(
@@ -124,11 +128,36 @@ class LoginView extends HookConsumerWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                'Sign in',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline),
-                              )
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 223, 220, 220),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          const RegisterView(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Sign in',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    final userData = await dio.get(
+                                        'http://http://localhost:4000/signin');
+                                    print(userData.data);
+                                  },
+                                  child: Text('aprete'))
                             ],
                           ),
                         ),

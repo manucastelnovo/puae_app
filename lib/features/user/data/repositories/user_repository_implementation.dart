@@ -1,12 +1,6 @@
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/domain/repositories/user_repository.dart';
-
-final userData = {
-  'id': 'testId',
-  'name': 'manu420',
-  'correo': 'marnutskate@gmail.com',
-  'password': '12345678',
-};
+import 'package:puae_app/utils/dio.dart';
 
 class UserRepositoryImplementation implements UserRepository {
   @override
@@ -14,8 +8,12 @@ class UserRepositoryImplementation implements UserRepository {
 
   @override
   Future<User> getUser({required String userId}) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return User.fromJson(userData);
+    try {
+      final userData = await dio.get('/signin');
+      return User.fromJson(userData.data);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override

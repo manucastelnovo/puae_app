@@ -1,13 +1,13 @@
 class User {
   final String userId;
   final String name;
-  final String correo;
+  final String email;
   final String password;
   final String userType;
   User({
     required this.userId,
     required this.name,
-    required this.correo,
+    required this.email,
     required this.password,
     required this.userType,
   });
@@ -16,7 +16,7 @@ class User {
     return User(
         userId: data['id'],
         name: data['name'],
-        correo: data['correo'],
+        email: data['email'],
         password: data['password'],
         userType: data['userType']);
   }
@@ -25,7 +25,7 @@ class User {
     return {
       'id': userId,
       'name': name,
-      'correo': correo,
+      'email': email,
       'password': password,
       'userType': userType,
     };

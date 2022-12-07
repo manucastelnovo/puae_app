@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:puae_app/features/user/presentation/views/login_view.dart';
+import 'package:puae_app/utils/dio.dart';
 
 import 'core/dependency_injection/locator.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "env/dev.env");
+  initDio();
   setupLocator();
   runApp(
-    const
-    // Para que los widgets puedan leer los providers, necesitamos envolver
-    // toda la aplicación en un `ProviderScope`.
-    // Aquí es donde se almacenará el estado de nuestros providers.
-    ProviderScope(
+    const ProviderScope(
       child: MyApp(),
     ),
   );
@@ -28,7 +28,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.red),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.red),
       home: const Scaffold(
         body: LoginView(),
       ),
