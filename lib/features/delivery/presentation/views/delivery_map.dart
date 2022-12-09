@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:puae_app/core/widgets/logo.dart';
-import 'package:puae_app/features/delivery/presentation/controllers/helpers.dart';
+import 'package:puae_app/features/delivery/presentation/controllers/delivery_maps_controller.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
 import 'package:puae_app/main.dart';
 
@@ -15,11 +16,16 @@ class DeliveryMapView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewportWidth = MediaQuery.of(context).size.width;
     final viewportHeight = MediaQuery.of(context).size.height;
-    // LatLng latLng = getLatLngFromSharedPrefs();
+
     late CameraPosition _initialCameraPosition;
 
-    _initialCameraPosition = const CameraPosition(
-      target: LatLng(25.204849, 55.270782),
+    ref.read(deliveryMapsProvider).setCurrentLocation();
+
+    Position? _currentPosition =
+        ref.watch(deliveryMapsProvider).currentLocation;
+
+    _initialCameraPosition = CameraPosition(
+      target: LatLng(_currentPosition!.latitude, _currentPosition.longitude),
       zoom: 15,
     );
 
