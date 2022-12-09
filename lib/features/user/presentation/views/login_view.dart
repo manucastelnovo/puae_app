@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:puae_app/core/widgets/logo.dart';
+import 'package:puae_app/features/delivery/presentation/views/delivery_map.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -153,11 +154,15 @@ class LoginView extends HookConsumerWidget {
                               ),
                               ElevatedButton(
                                   onPressed: () async {
-                                    final userData = await dio.get(
-                                        'http://http://localhost:4000/signin');
-                                    print(userData.data);
+                                    Navigator.push<void>(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) =>
+                                            DeliveryMapView(),
+                                      ),
+                                    );
                                   },
-                                  child: Text('aprete'))
+                                  child: const Text('Map'))
                             ],
                           ),
                         ),

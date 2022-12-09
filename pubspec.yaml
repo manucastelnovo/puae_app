@@ -33,6 +33,8 @@ dependencies:
   dio: ^4.0.0
   stacked_services: ^0.8.15
   get_it: ^7.2.0
+  mapbox_gl: ^0.15.0
+  shared_preferences: ^2.0.13
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
