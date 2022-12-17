@@ -8,7 +8,6 @@ import 'core/dependency_injection/locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load(fileName: "env/dev.env");
   initDio();
   setupLocator();

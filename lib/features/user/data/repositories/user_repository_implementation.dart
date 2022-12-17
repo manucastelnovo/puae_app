@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/domain/repositories/user_repository.dart';
 import 'package:puae_app/utils/dio.dart';
@@ -9,8 +10,10 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Future<User> getUser({required String userId}) async {
     try {
-      final userData = await dio.get('/signin');
-      return User.fromJson(userData.data);
+      Response response = await Dio().get(
+          "https://2570-2803-2a00-a-e097-6959-e0e9-2198-4b3e.sa.ngrok.io/signin");
+      print(response.data.toString());
+      return User.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }

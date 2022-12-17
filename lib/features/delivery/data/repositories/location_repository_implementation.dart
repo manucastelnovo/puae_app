@@ -9,15 +9,12 @@ class LocationServiceImplementation implements LocationService {
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best}) async {
     try {
       Position? position = await Geolocator.getLastKnownPosition();
-      if (position == null) {
-        position = await Geolocator.getCurrentPosition();
-      }
+      position ??= await Geolocator.getCurrentPosition();
       return position;
     } on PermissionDeniedException {
       throw const PermissionDeniedException("Could not get current location");
     } catch (e) {
       throw e;
-      print('no andaaaaaaaaaaaaaa');
     }
   }
 }
