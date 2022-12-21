@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:puae_app/core/dependency_injection/locator.dart';
-import 'package:puae_app/features/delivery/domain/repositories/location_repository.dart';
 
 class TurnByTurnController extends ChangeNotifier {
-  TurnByTurnController(this.ref);
-  final Ref ref;
+  TurnByTurnController();
 
   late double _distanceRemaining;
 
@@ -19,9 +14,6 @@ class TurnByTurnController extends ChangeNotifier {
   MapBoxNavigationViewController get controller => _controller;
 
   final _options = MapBoxOptions(
-
-      // initialLatitude: 36.1175275,
-      // initialLongitude: -115.1839524,
       zoom: 13.0,
       tilt: 0.0,
       bearing: 0.0,
@@ -51,9 +43,6 @@ class TurnByTurnController extends ChangeNotifier {
   MapBoxOptions get options => _options;
 
   Future<void> onRouteEvent(e) async {
-    // _distanceRemaining = await directions.distanceRemaining;
-    // _durationRemaining = await directions.durationRemaining;
-
     switch (e.eventType) {
       case MapBoxEvent.progress_change:
         var progressEvent = e.data as RouteProgressEvent;
@@ -91,5 +80,5 @@ class TurnByTurnController extends ChangeNotifier {
 }
 
 final turnByTurnProvider = ChangeNotifierProvider(
-  (ref) => TurnByTurnController(ref),
+  (ref) => TurnByTurnController(),
 );
