@@ -15,6 +15,7 @@ class RegisterView extends HookConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(),
         body: Container(
           width: double.infinity,
           height: double.infinity,

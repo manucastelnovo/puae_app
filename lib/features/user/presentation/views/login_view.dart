@@ -137,10 +137,10 @@ class LoginView extends HookConsumerWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.push<void>(
+                                  Navigator.push(
                                     context,
-                                    MaterialPageRoute<void>(
-                                      builder: (BuildContext context) =>
+                                    MaterialPageRoute(
+                                      builder: (context) =>
                                           const RegisterView(),
                                     ),
                                   );
