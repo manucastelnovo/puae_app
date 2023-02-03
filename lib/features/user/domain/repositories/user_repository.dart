@@ -6,4 +6,5 @@ abstract class UserRepository {
       {required String userId, required String newUserName});
   Future<void> deleteUser({required String userId});
   Future<void> createdUser({required String userName});
+  User? get currentUser;
 }

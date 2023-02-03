@@ -9,7 +9,7 @@ class GetUser {
   }) : _userRepository = userRepository ?? locator<UserRepository>();
 
   Future<User> call() async {
-    const String userId = 'testId';
+    const String userId = '1';
     final user = await _userRepository.getUser(userId: userId);
     return user;
   }

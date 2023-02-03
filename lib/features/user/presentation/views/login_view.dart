@@ -5,6 +5,7 @@ import 'package:puae_app/features/user/presentation/controllers/login_view_contr
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:puae_app/features/user/presentation/views/dashboard_view.dart';
 import 'package:puae_app/features/user/presentation/views/register_view.dart';
 import 'package:puae_app/utils/dio.dart';
 
@@ -14,13 +15,13 @@ class LoginView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewportWidth = MediaQuery.of(context).size.width;
-    final userProvider = ref.watch(userViewProvider);
+    final userProvider = ref.watch(loginViewProvider);
     final user = TextEditingController();
     final password = TextEditingController();
     final _keyForm = GlobalKey<FormState>();
 
     useEffect(() {
-      ref.read(userViewProvider).getUser();
+      ref.read(loginViewProvider).getUser();
       print('putoooooooooooooooooo${userProvider.currentUser}');
       return;
     }, []);
@@ -105,12 +106,22 @@ class LoginView extends HookConsumerWidget {
                               Container(
                                 width: viewportWidth * 0.9,
                                 child: ElevatedButton(
-                                  onPressed: (() {
+                                  onPressed: (() async {
                                     if (_keyForm.currentState!.validate()) {
                                       print('aprete join');
                                       print(
                                           userProvider.currentUser.toString());
                                       print('sdfsdfs');
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DashboardView(
+                                            user: userProvider.currentUser!.name
+                                                .toString(),
+                                          ),
+                                        ),
+                                      );
                                     }
                                   }),
                                   child: const Text(

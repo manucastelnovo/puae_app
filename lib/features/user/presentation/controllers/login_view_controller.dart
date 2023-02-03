@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:puae_app/core/dependency_injection/locator.dart';
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/domain/repositories/user_repository.dart';
 import 'package:puae_app/features/user/domain/usecases/get_user.dart';
 
 class UserViewController extends ChangeNotifier {
-  final GetUser _getUser;
+  final UserRepository _userRepository;
 
   UserViewController({
-    GetUser? getUser,
-  }) : _getUser = getUser ?? GetUser();
+    required UserRepository userRepository,
+  }) : _userRepository = userRepository;
 
   bool isLoading = true;
   User? _currentUser;
@@ -40,8 +41,11 @@ class UserViewController extends ChangeNotifier {
 
   Future<void> getUser() async {
     try {
-      _currentUser = await _getUser();
+      print('estoy controller');
+      await _userRepository.getUser(userId: '1');
+      _currentUser = _userRepository.currentUser;
       print(_currentUser);
+      print('getuser');
     } catch (e) {
       debugPrint(e.toString());
     } finally {
@@ -51,4 +55,6 @@ class UserViewController extends ChangeNotifier {
   }
 }
 
-final userViewProvider = ChangeNotifierProvider((ref) => UserViewController());
+final loginViewProvider = ChangeNotifierProvider((ref) => UserViewController(
+      userRepository: locator<UserRepository>(),
+    ));
