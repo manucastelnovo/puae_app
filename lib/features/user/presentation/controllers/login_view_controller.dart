@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:puae_app/core/dependency_injection/locator.dart';
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/domain/repositories/user_repository.dart';
-import 'package:puae_app/features/user/domain/usecases/get_user.dart';
 
 class UserViewController extends ChangeNotifier {
   final UserRepository _userRepository;
@@ -39,10 +38,10 @@ class UserViewController extends ChangeNotifier {
     return 'usuario incorrecto';
   }
 
-  Future<void> getUser() async {
+  Future<void> getUser(String name) async {
     try {
       print('estoy controller');
-      await _userRepository.getUser(userId: '1');
+      await _userRepository.getUser(name: name);
       _currentUser = _userRepository.currentUser;
       print(_currentUser);
       print('getuser');

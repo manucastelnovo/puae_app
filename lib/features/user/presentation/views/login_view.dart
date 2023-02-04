@@ -19,9 +19,10 @@ class LoginView extends HookConsumerWidget {
     final user = TextEditingController();
     final password = TextEditingController();
     final _keyForm = GlobalKey<FormState>();
+    String name = '';
 
     useEffect(() {
-      ref.read(loginViewProvider).getUser();
+      // ref.read(loginViewProvider).getUser();
       print('putoooooooooooooooooo${userProvider.currentUser}');
       return;
     }, []);
@@ -56,6 +57,9 @@ class LoginView extends HookConsumerWidget {
                               TextFormField(
                                 validator: userProvider.validatorUser,
                                 controller: user,
+                                onChanged: (String value) {
+                                  name = value;
+                                },
                                 decoration: const InputDecoration(
                                     labelText: 'Username',
                                     labelStyle: TextStyle(color: Colors.black),
@@ -107,8 +111,11 @@ class LoginView extends HookConsumerWidget {
                                 width: viewportWidth * 0.9,
                                 child: ElevatedButton(
                                   onPressed: (() async {
+                                    print('aprete join');
+                                    await ref
+                                        .read(loginViewProvider)
+                                        .getUser(name);
                                     if (_keyForm.currentState!.validate()) {
-                                      print('aprete join');
                                       print(
                                           userProvider.currentUser.toString());
                                       print('sdfsdfs');
