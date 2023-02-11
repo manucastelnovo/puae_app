@@ -5,6 +5,6 @@ abstract class UserRepository {
   Future<void> updateUserName(
       {required String userId, required String newUserName});
   Future<void> deleteUser({required String userId});
-  Future<void> createdUser({required String userName});
+  Future<void> createdUser({required User newUser});
   User? get currentUser;
 }

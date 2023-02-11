@@ -1,16 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:puae_app/core/widgets/logo.dart';
+import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
+import 'package:puae_app/features/user/presentation/controllers/register_controller.dart';
+
+Dio dio = Dio();
 
 class RegisterView extends HookConsumerWidget {
-  const RegisterView({Key? key}) : super(key: key);
+  RegisterView({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewportWidth = MediaQuery.of(context).size.width;
     final viewportHeight = MediaQuery.of(context).size.height;
+    final registerController = ref.watch(registerProvider);
+    String? userName;
+    String? userPassword;
+    String? userEmail;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -59,12 +69,17 @@ class RegisterView extends HookConsumerWidget {
                         width: viewportWidth * 0.9,
                         color: const Color.fromARGB(255, 223, 220, 220),
                         child: Form(
+                          key: _formKey,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               const SizedBox(height: 120),
                               TextFormField(
+                                validator: registerController.validatorUser,
+                                onSaved: (newValue) {
+                                  userName = newValue;
+                                },
                                 decoration: const InputDecoration(
                                     labelText: 'Username',
                                     labelStyle: TextStyle(color: Colors.black),
@@ -86,6 +101,10 @@ class RegisterView extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               TextFormField(
+                                validator: registerController.validatorEmail,
+                                onSaved: (newValue) {
+                                  userEmail = newValue;
+                                },
                                 decoration: const InputDecoration(
                                     labelText: 'Email',
                                     labelStyle: TextStyle(color: Colors.black),
@@ -108,6 +127,11 @@ class RegisterView extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               TextFormField(
+                                validator: registerController.validatorPass,
+                                onSaved: (newValue) {
+                                  userPassword = newValue;
+                                },
+                                obscureText: true,
                                 decoration: const InputDecoration(
                                     labelText: 'Password',
                                     labelStyle: TextStyle(color: Colors.black),
@@ -130,6 +154,8 @@ class RegisterView extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               TextFormField(
+                                validator: registerController.validatorPass,
+                                obscureText: true,
                                 decoration: const InputDecoration(
                                     labelText: 'Password',
                                     labelStyle: TextStyle(color: Colors.black),
@@ -153,10 +179,30 @@ class RegisterView extends HookConsumerWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Container(
+                              SizedBox(
                                 width: viewportWidth * 0.9,
                                 child: ElevatedButton(
-                                  onPressed: (() {}),
+                                  onPressed: () async {
+                                    print('estoy afu');
+                                    // if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                    print('entre');
+                                    try {
+                                      final newUser = User(
+                                          name: userName!,
+                                          email: userEmail!,
+                                          password: userPassword!);
+
+                                      final response = await dio.post(
+                                          "https://c7b0-2803-2a00-2c0e-ebd9-c00a-9482-51f5-d38d.sa.ngrok.io/api/users/register",
+                                          data: newUser.toJson());
+                                    } on DioError catch (e) {
+                                      print(e);
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                  // },
                                   child: const Text(
                                     'Register',
                                     style: TextStyle(

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:puae_app/core/widgets/logo.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:puae_app/features/user/presentation/views/dashboard_view.dart';
 import 'package:puae_app/features/user/presentation/views/register_view.dart';
-import 'package:puae_app/utils/dio.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -20,12 +16,6 @@ class LoginView extends HookConsumerWidget {
     final password = TextEditingController();
     final _keyForm = GlobalKey<FormState>();
     String name = '';
-
-    useEffect(() {
-      // ref.read(loginViewProvider).getUser();
-      print('putoooooooooooooooooo${userProvider.currentUser}');
-      return;
-    }, []);
 
     return Container(
       width: double.infinity,
@@ -56,7 +46,7 @@ class LoginView extends HookConsumerWidget {
                               const SizedBox(height: 20),
                               TextFormField(
                                 validator: userProvider.validatorUser,
-                                controller: user,
+                                controller: user, //todo cambiar nombre
                                 onChanged: (String value) {
                                   name = value;
                                 },
@@ -107,19 +97,14 @@ class LoginView extends HookConsumerWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Container(
+                              SizedBox(
                                 width: viewportWidth * 0.9,
                                 child: ElevatedButton(
                                   onPressed: (() async {
-                                    print('aprete join');
                                     await ref
                                         .read(loginViewProvider)
                                         .getUser(name);
                                     if (_keyForm.currentState!.validate()) {
-                                      print(
-                                          userProvider.currentUser.toString());
-                                      print('sdfsdfs');
-
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -157,8 +142,7 @@ class LoginView extends HookConsumerWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterView(),
+                                      builder: (context) => RegisterView(),
                                     ),
                                   );
                                 },
