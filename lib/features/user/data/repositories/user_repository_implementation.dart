@@ -13,7 +13,7 @@ class UserRepositoryImplementation implements UserRepository {
   Future<User> getUser({required String name}) async {
     try {
       Response response = await Dio().get(
-          "https://088a-2803-2a00-9-b97f-b176-e933-afd2-df78.sa.ngrok.io/user/$name");
+          "https://c7b0-2803-2a00-2c0e-ebd9-c00a-9482-51f5-d38d.sa.ngrok.io/api/users/$name");
       print(response.data.toString());
       print('estoy implementacion');
       _currentUser = User.fromJson(response.data);
@@ -32,7 +32,15 @@ class UserRepositoryImplementation implements UserRepository {
   }
 
   @override
-  Future<void> createdUser({required String userName}) async {}
+  Future<void> createdUser({required User newUser}) async {
+    try {
+      await Dio().post(
+          "https://42a8-2803-2a00-9-b97f-b176-e933-afd2-df78.sa.ngrok.io/register",
+          data: newUser.toJson());
+    } catch (e) {
+      throw (e);
+    }
+  }
 
   @override
   User? get currentUser => _currentUser;
