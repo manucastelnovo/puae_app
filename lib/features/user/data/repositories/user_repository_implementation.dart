@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/domain/repositories/user_repository.dart';
 import 'package:puae_app/utils/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserRepositoryImplementation implements UserRepository {
   User? _currentUser;
@@ -12,8 +13,8 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Future<User> getUser({required String name}) async {
     try {
-      Response response = await Dio().get(
-          "https://c7b0-2803-2a00-2c0e-ebd9-c00a-9482-51f5-d38d.sa.ngrok.io/api/users/$name");
+      Response response =
+          await Dio().get("${dotenv.env['SERVER_ADDRESS']}/api/users/$name");
       print(response.data.toString());
       print('estoy implementacion');
       _currentUser = User.fromJson(response.data);
@@ -34,8 +35,7 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Future<void> createdUser({required User newUser}) async {
     try {
-      await Dio().post(
-          "https://42a8-2803-2a00-9-b97f-b176-e933-afd2-df78.sa.ngrok.io/register",
+      await Dio().post("${dotenv.env['SERVER_ADDRESS']}/register",
           data: newUser.toJson());
     } catch (e) {
       throw (e);
