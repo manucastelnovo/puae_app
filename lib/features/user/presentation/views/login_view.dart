@@ -147,7 +147,7 @@ class LoginView extends HookConsumerWidget {
                                   );
                                 },
                                 child: const Text(
-                                  'Sign in',
+                                  'Register',
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 0, 0, 0),
                                       decoration: TextDecoration.underline),
