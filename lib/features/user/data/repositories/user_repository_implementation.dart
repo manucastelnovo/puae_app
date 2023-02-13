@@ -35,8 +35,8 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Future<void> createdUser({required User newUser}) async {
     try {
-      await Dio().post("${dotenv.env['SERVER_ADDRESS']}/register",
-          data: newUser.toJson());
+      await Dio()
+          .post("${dotenv.env['SERVER_ADDRESS']}/", data: newUser.toJson());
     } catch (e) {
       throw (e);
     }

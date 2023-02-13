@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:puae_app/core/widgets/logo.dart';
 import 'package:puae_app/features/user/domain/models/user.dart';
 import 'package:puae_app/features/user/presentation/controllers/login_view_controller.dart';
 import 'package:puae_app/features/user/presentation/controllers/register_controller.dart';
+import 'package:puae_app/features/user/presentation/views/dashboard_view.dart';
 
 Dio dio = Dio();
 
@@ -15,6 +17,7 @@ class RegisterView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userProvider = ref.watch(loginViewProvider);
     final viewportWidth = MediaQuery.of(context).size.width;
     final viewportHeight = MediaQuery.of(context).size.height;
     final registerController = ref.watch(registerProvider);
@@ -194,8 +197,18 @@ class RegisterView extends HookConsumerWidget {
                                           password: userPassword!);
 
                                       final response = await dio.post(
-                                          "https://c7b0-2803-2a00-2c0e-ebd9-c00a-9482-51f5-d38d.sa.ngrok.io/api/users/register",
+                                          "https://fc84-2803-2a00-9-b97f-b176-e933-afd2-df78.sa.ngrok.io/api/users/",
                                           data: newUser.toJson());
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DashboardView(
+                                            user: userProvider.currentUser!.name
+                                                .toString(),
+                                          ),
+                                        ),
+                                      );
                                     } on DioError catch (e) {
                                       print(e);
                                     } catch (e) {
