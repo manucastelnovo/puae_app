@@ -11,7 +11,7 @@ class LoginView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewportWidth = MediaQuery.of(context).size.width;
-    final userProvider = ref.watch(loginViewProvider);
+    final userProvider = ref.read(loginViewProvider);
     final user = TextEditingController();
     final password = TextEditingController();
     final _keyForm = GlobalKey<FormState>();

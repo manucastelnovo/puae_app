@@ -13,6 +13,7 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Future<User> getUser({required String name}) async {
     try {
+      print("${dotenv.env['SERVER_ADDRESS']}/api/users/$name");
       Response response =
           await Dio().get("${dotenv.env['SERVER_ADDRESS']}/api/users/$name");
       print(response.data.toString());
